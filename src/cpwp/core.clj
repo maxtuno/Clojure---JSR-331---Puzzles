@@ -56,3 +56,29 @@
       (catch Exception exception
         (.log problem (.getMessage exception))))))
 
+(defn solve-math
+  [problem solution math]
+  (let [solver (.getSolver problem)
+        solution-iterator (.solutionIterator solver)]
+    (try
+      
+      (.log problem "Before Constraint Posting")
+      (.log problem (.getVars problem))
+      
+      (solution)
+      
+      (.log problem "After Constraint Posting")
+      (.log problem (.getVars problem))
+      
+      (.log problem "=== Find Solution:")
+      
+      (while (.hasNext solution-iterator)
+        (let [next-solution (.next solution-iterator)]
+          (math next-solution)
+          (.log next-solution)))
+      
+      (.log problem "After Search")
+      (.log problem (.getVars problem))
+      
+      (catch Exception exception
+        (.log problem (.getMessage exception))))))
